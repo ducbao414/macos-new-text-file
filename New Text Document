@@ -1,0 +1,38 @@
+-- ---- CONFIG ---------------------------------------------------------------
+property baseName : "untitled"
+property extension : ".txt"
+-- --------------------------------------------------------------------------
+
+-- 1. Pick a folder: front‑most Finder window, or Desktop if none
+tell application "Finder"
+	if (count of Finder windows) is 0 then
+		set currentFolder to (path to desktop) as alias
+	else
+		set currentFolder to (target of front window) as alias
+	end if
+end tell
+
+-- 2. Build a unique file path
+set posixFolder to POSIX path of currentFolder
+set counter to 0
+repeat
+	if counter is 0 then
+		set newFile to posixFolder & baseName & extension
+	else
+		set newFile to posixFolder & baseName & "_" & counter & extension
+	end if
+	
+	try
+		-- exits repeat if the file does NOT exist
+		do shell script "test ! -e " & quoted form of newFile
+		exit repeat
+	end try
+	
+	set counter to counter + 1
+end repeat
+
+-- 3. Create the empty text file
+do shell script "touch " & quoted form of newFile
+
+-- 4. (Optional) Reveal the new file in Finder
+tell application "Finder" to reveal (POSIX file newFile as alias)
