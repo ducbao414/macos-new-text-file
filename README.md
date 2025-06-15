@@ -17,7 +17,7 @@ This AppleScript is just a few lines of code that lets you create a new text fil
 You can trust yourself to edit, run, and export the script right on your own Mac.
 
 ## Edit & Export to .app
-- Open **Script Editor** (installed with your macOS), go to File → New, and paste the content of `New Text Document.scpt`.
+- Open **Script Editor** (installed with your macOS), go to File → New, and paste the content of `New Text Document`.
 - (Optional) Modify `baseName` and `extension` if needed (in the config section at the beginning of the script).
 - Go to File → Export, choose **Application** as the file format, and save the new `New Text Document.app` to **Applications**.
 
