@@ -10,7 +10,7 @@ If you're coming from Windows, you might notice macOS Finder is missing that han
 
 Instead, you have to break your workflow, open TextEdit, navigate to the right folder, and create a new file.
 
-Some apps let you create a text file from the context menu, but they either need accessibility permissions, only work on right-clicked subfolders, or you just don’t trust 3rd-party apps.
+Some apps let you create a text file from the context menu, but they either need accessibility permissions, only work on right-clicked subfolders, or you just don't trust 3rd-party apps.
 
 This AppleScript is just a few lines of code that lets you create a new text file in the current Finder window with (Cmd+Space n).
 
@@ -23,3 +23,18 @@ You can trust yourself to edit, run, and export the script right on your own Mac
 
 ## Uses
 Now that you have `New Text Document.app` in Applications, you can run it from Spotlight by pressing Cmd+Space, then `n`.
+
+## Create Other File Formats
+
+To create files in other formats, specify the `templateFile` path in the config section.  
+If `templateFile` is specified (i.e., not an empty string `""`), the script will create a new file in the current Finder window by copying the `templateFile`.
+
+Examples:
+
+```
+property templateFile : "/Users/yourname/Documents/My Document.docx"
+```
+
+```
+property templateFile : "/Users/yourname/Documents/Sheets.xlsx"
+```
