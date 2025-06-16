@@ -1,6 +1,7 @@
 -- ---- CONFIG ---------------------------------------------------------------
 property baseName : "untitled"
 property extension : ".txt"
+property templateFile : "" -- Example: "/Users/yourname/Documents/My Document.docx"
 -- --------------------------------------------------------------------------
 
 -- 1. Pick a folder: front‑most Finder window, or Desktop if none
@@ -12,7 +13,27 @@ tell application "Finder"
 	end if
 end tell
 
--- 2. Build a unique file path
+-- 2. Check templateFile and extract baseName/extension if set
+if templateFile is not "" then
+	set AppleScript's text item delimiters to "/"
+	set parts to text items of templateFile
+	set filename to item -1 of parts
+	set AppleScript's text item delimiters to ""
+	
+	-- Separate baseName and extension
+	set AppleScript's text item delimiters to "."
+	set nameParts to text items of filename
+	set AppleScript's text item delimiters to ""
+	if (count of nameParts) > 1 then
+		set extension to "." & item -1 of nameParts
+		set baseName to (items 1 thru -2 of nameParts) as string
+	else
+		set baseName to filename
+		set extension to ""
+	end if
+end if
+
+-- 3. Build a unique file path
 set posixFolder to POSIX path of currentFolder
 set counter to 0
 repeat
@@ -23,7 +44,6 @@ repeat
 	end if
 	
 	try
-		-- exits repeat if the file does NOT exist
 		do shell script "test ! -e " & quoted form of newFile
 		exit repeat
 	end try
@@ -31,8 +51,12 @@ repeat
 	set counter to counter + 1
 end repeat
 
--- 3. Create the empty text file
-do shell script "touch " & quoted form of newFile
+-- 4. Create the file
+if templateFile is not "" then
+	do shell script "cp " & quoted form of templateFile & " " & quoted form of newFile
+else
+	do shell script "touch " & quoted form of newFile
+end if
 
--- 4. (Optional) Reveal the new file in Finder
+-- 5. Reveal the new file in Finder
 tell application "Finder" to reveal (POSIX file newFile as alias)
