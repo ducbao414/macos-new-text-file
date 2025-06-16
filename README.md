@@ -1,5 +1,5 @@
 # macos-new-text-file
-Quickly create a new text file in the current Finder window (Cmd+Space n).
+Quickly create a new text file (and other file formats) in the current Finder window (Cmd+Space n).
 
 
 https://github.com/user-attachments/assets/95b78dec-013c-4d9e-9639-e793aec85a91
